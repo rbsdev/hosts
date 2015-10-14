@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+. tasks/library
+
+main() {
+  iconutil -c icns source/images/app.iconset
+}
+
+header
+main &> $TASK_LOG
+footer

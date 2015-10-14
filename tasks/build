@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+. tasks/library
+
+build() {
+  ENVIRONMENT=$1
+  BUILD="builds/Hosts ${ENVIRONMENT}"
+
+  PACKAGER=(
+    --app-bundle-id=br.com.gruporbs.hosts
+    --arch=x64
+    --asar
+    --helper-bundle-id=br.com.gruporbs.hosts
+    --icon=source/images/app.icns
+    --out=builds
+    --overwrite
+    --platform=darwin
+    --version=0.33.7
+  )
+
+  cp -r source "${BUILD}"
+  rm -fr "${BUILD}/images/app.iconset"
+  rm -fr "${BUILD}/images/icons.sketch"
+  sed -i '' "s/{{environment}}/$(tr '[A-Z]' '[a-z]' <<< "${ENVIRONMENT}")/" "${BUILD}/package.json"
+
+  node_modules/electron-packager/cli.js "${BUILD}" "Hosts ${ENVIRONMENT}" ${PACKAGER[@]}
+
+  mv "${BUILD}-darwin-x64/Hosts ${ENVIRONMENT}.app" builds
+  rm -fr "${BUILD}" "${BUILD}-darwin-x64"
+  rm -fr "${BUILD}.app/Contents/Resources/default_app"
+}
+
+main() {
+  mkdir builds
+}
+
+main
+
+header development
+build Development &> $TASK_LOG
+footer
+
+header staging
+build Staging &> $TASK_LOG
+footer
+
+header production
+build Production &> $TASK_LOG
+footer
