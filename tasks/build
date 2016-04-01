@@ -5,9 +5,11 @@
 build() {
   ENVIRONMENT=$1
   BUILD="builds/Hosts ${ENVIRONMENT}"
+  VERSION=$(tasks/version)
 
   PACKAGER=(
     --app-bundle-id=br.com.gruporbs.hosts
+    --app-version=$VERSION
     --arch=x64
     --asar
     --helper-bundle-id=br.com.gruporbs.hosts

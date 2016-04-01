@@ -5,7 +5,9 @@
 				help \
 				icons \
 				install \
-				run
+				run \
+				setup \
+				version
 
 .SILENT:
 
@@ -32,3 +34,11 @@ install:
 # run the app
 run:
 	tasks/run
+
+# setup the apps
+setup:
+	tasks/setup
+
+# show the version
+version:
+	tasks/version
