@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+. tasks/library
+
+main() {
+  local DOCUMENTS="${HOME}/Documents"
+  local HOSTS_COMMON="${DOCUMENTS}/Hosts Common.txt"
+  local HOSTS_DEVELOPMENT="${DOCUMENTS}/Hosts Development.txt"
+  local HOSTS_PRODUCTION="${DOCUMENTS}/Hosts Production.txt"
+  local HOSTS_STAGING="${DOCUMENTS}/Hosts Staging.txt"
+
+  cp -r builds/*.app /Applications
+
+  [ -e "$HOSTS_COMMON" ] || echo '127.0.0.1  localhost' > "$HOSTS_COMMON"
+  [ -e "$HOSTS_DEVELOPMENT" ] || touch "$HOSTS_DEVELOPMENT"
+  [ -e "$HOSTS_PRODUCTION" ] || touch "$HOSTS_PRODUCTION"
+  [ -e "$HOSTS_STAGING" ] || touch "$HOSTS_STAGING"
+}
+
+header
+main &> $TASK_LOG
+footer

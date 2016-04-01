@@ -6,6 +6,7 @@
 				icons \
 				install \
 				run \
+				setup \
 				version
 
 .SILENT:
@@ -33,6 +34,10 @@ install:
 # run the app
 run:
 	tasks/run
+
+# setup the apps
+setup:
+	tasks/setup
 
 # show the version
 version:
